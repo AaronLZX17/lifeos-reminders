@@ -15,7 +15,7 @@ const TZ = "Asia/Kuala_Lumpur";
 const now = new Date();
 const parts = Object.fromEntries(
   new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit",
-    day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false })
+    day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
   .formatToParts(now).map(p => [p.type, p.value]));
 const todayStr = `${parts.year}-${parts.month}-${parts.day}`;
 const nowMin = (+parts.hour) * 60 + (+parts.minute);
