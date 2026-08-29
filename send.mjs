@@ -75,6 +75,13 @@ for (const doc of pushDocs.docs){
     .sort((a, b) => (a.time || "") < (b.time || "") ? -1 : 1);
   const updates = {};
 
+  // self-serve test ping requested from the app's Settings drawer
+  const testReq = doc.data().test || 0;
+  if (testReq && testReq !== doc.data().testDone){
+    await sendTo(tokens, "Life OS", "Reminders are working on this device.", updates);
+    updates.testDone = testReq;
+  }
+
   // per-event reminders: first at `lead` minutes out, then every `every` minutes
   for (const ev of events){
     if (!ev.time) continue;
