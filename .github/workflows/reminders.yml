@@ -1,7 +1,7 @@
 name: reminders
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "1/6 * * * *"
   workflow_dispatch:
 permissions: {}
 concurrency: reminders
