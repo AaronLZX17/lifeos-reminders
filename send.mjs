@@ -64,7 +64,7 @@ for (const doc of pushDocs.docs){
             fcmOptions: { link: "https://lifeosiuu.web.app/" },
           },
         });
-        console.log(`sent: ${uid.slice(0, 6)}… ${ev.title} in ${delta}m`);
+        console.log(`sent: user ${uid.slice(0, 4)}… event starting in ${delta}m`);
       } catch (err){
         if (String(err.code).includes("registration-token-not-registered"))
           updates[`tokens.${token}`] = admin.firestore.FieldValue.delete();
