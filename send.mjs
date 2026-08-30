@@ -103,7 +103,7 @@ for (const doc of pushDocs.docs){
     const d2 = nowMin - wakeMin;
     if (d2 >= 0){
       const slot = wakeEvery > 0 ? Math.floor(d2 / wakeEvery) : 0;
-      const inWindow = wakeEvery > 0 ? slot <= 2 : d2 <= 60;
+      const inWindow = wakeEvery > 0 ? slot <= 2 : d2 <= 180;   /* wide catch-up: GH cron is being throttled to ~2h */
       const dedupe = `digest:${todayStr}:${slot}`;
       if (inWindow && !sent[dedupe]){
         const list = events.slice(0, 6)
