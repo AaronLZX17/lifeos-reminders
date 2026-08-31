@@ -92,7 +92,7 @@ for (const doc of pushDocs.docs){
     const dedupe = `${ev.id}:${todayStr}:${slot}`;
     if (sent[dedupe]) continue;
     const when = delta >= 60 ? `in ${Math.round(delta / 60)}h ${delta % 60}m` : `in ${delta} min`;
-    await sendTo(tokens, ev.title,
+    await sendTo(tokens, (ev.emoji ? ev.emoji + " " : "") + ev.title,
       `Starts ${when} — at ${ft(ev.time)}` + (ev.end ? ` (until ${ft(ev.end)})` : ""), updates);
     updates[`sent.${dedupe}`] = Date.now();
   }
@@ -107,7 +107,7 @@ for (const doc of pushDocs.docs){
       const dedupe = `digest:${todayStr}:${slot}`;
       if (inWindow && !sent[dedupe]){
         const list = events.slice(0, 6)
-          .map(e => (e.time ? ft(e.time) + " " : "") + e.title).join("  ·  ");
+          .map(e => (e.time ? ft(e.time) + " " : "") + (e.emoji ? e.emoji + " " : "") + e.title).join("  ·  ");
         await sendTo(tokens,
           `Today: ${events.length} event${events.length === 1 ? "" : "s"}`,
           list + (events.length > 6 ? " …" : ""), updates);
