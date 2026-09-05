@@ -22,12 +22,17 @@ const nowMin = (+parts.hour) * 60 + (+parts.minute);
 const localDate = new Date(+parts.year, +parts.month - 1, +parts.day);
 const dowM = (localDate.getDay() + 6) % 7;
 
+const isLeap = y => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+// month-day match; a 29 Feb anniversary lands on 28 Feb in non-leap years
+const sameMD = anchor => anchor.slice(5) === todayStr.slice(5)
+  || (anchor.slice(5) === "02-29" && todayStr.slice(5) === "02-28" && !isLeap(+parts.year));
 function occursToday(ev){
   if (ev.skip && ev.skip.includes(todayStr)) return false;
   if (ev.repeat && ev.repeat !== "none" && ev.until && todayStr > ev.until) return false;
   if (ev.repeat === "weekly")  return todayStr >= ev.date && ev.day === dowM;
   if (ev.repeat === "monthly") return todayStr >= ev.date && ev.dom === localDate.getDate();
   if (ev.repeat === "daily")   return todayStr >= ev.date;
+  if (ev.repeat === "yearly")  return todayStr >= ev.date && sameMD(ev.date);
   return ev.date === todayStr;
 }
 function t12(t){
